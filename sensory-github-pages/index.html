@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sensory Evaluation | MVP Demo</title>
+<style>
+:root{--navy:#172b4d;--blue:#2463eb;--blue2:#eaf1ff;--bg:#f4f6fa;--line:#e4e8f0;--text:#182230;--muted:#667085;--green:#16845b;--red:#c43d4b;--amber:#a86608}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px/1.45 Inter,Segoe UI,Arial,sans-serif;color:var(--text)}
+button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh}.topbar{height:66px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100vw - 1180px)/2));position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;font-weight:750;color:var(--navy);font-size:16px}.logo{width:34px;height:34px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800}.top-right{display:flex;align-items:center;gap:10px;color:var(--muted)}.avatar{width:31px;height:31px;border-radius:50%;background:#e8edfa;color:var(--navy);display:grid;place-items:center;font-weight:700}
+.wrap{max-width:1180px;margin:28px auto;padding:0 22px}.crumb{font-size:12px;color:var(--muted);margin-bottom:14px}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}.page-head h1{font-size:25px;margin:0 0 5px;color:var(--navy)}.sub{color:var(--muted);margin:0}.pill{display:inline-flex;align-items:center;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#edf2ff;color:#3559a5}.pill.green{background:#e8f6ef;color:var(--green)}.pill.gray{background:#eef0f3;color:#5e6673}.btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 13px;font-weight:650;color:#344054}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.dark{background:var(--navy);border-color:var(--navy);color:#fff}.btn.danger{color:var(--red);border-color:#f1d5d8}.btn:disabled{opacity:.45;cursor:not-allowed}.panel{background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:0 2px 8px #16233a08}.toolbar{padding:15px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-bottom:1px solid var(--line)}.search{width:min(320px,100%);border:1px solid var(--line);border-radius:8px;padding:10px 12px;outline:none}.search:focus,input:focus{border-color:#8eabf6;box-shadow:0 0 0 3px #2463eb16}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:760px}th{text-align:left;color:#667085;background:#fafbfc;font-size:11px;text-transform:uppercase;letter-spacing:.045em;padding:12px 15px;border-bottom:1px solid var(--line)}td{padding:14px 15px;border-bottom:1px solid #edf0f4}tr:last-child td{border-bottom:0}tbody tr:hover{background:#fbfcff}.code{font-weight:750;color:var(--navy)}.muted{color:var(--muted)}.actions{display:flex;gap:7px;align-items:center}.linkbtn{border:0;background:none;color:var(--blue);font-weight:700;padding:4px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:18px}.stat{padding:16px}.stat .label{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:24px;color:var(--navy);margin-top:4px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-size:12px;font-weight:700;color:#475467;margin-bottom:6px}.field input{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:8px;background:#f8f9fb;color:#344054}.section-title{font-size:15px;font-weight:750;color:var(--navy);margin:0 0 14px}.content-card{padding:20px;margin-bottom:16px}.score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.score-card{border:1px solid var(--line);border-radius:11px;padding:13px;background:#fff}.score-card label{display:block;font-weight:700;color:#344054;margin-bottom:11px}.score-buttons{display:flex;gap:5px}.score-buttons button{width:31px;height:31px;border:1px solid var(--line);border-radius:7px;background:#fff;color:#475467;font-weight:700}.score-buttons button.selected{background:var(--blue);border-color:var(--blue);color:#fff}.score-hint{font-size:11px;color:var(--muted);margin-top:8px}.form-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:18px}.detail-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.meta{background:#f8f9fb;border-radius:9px;padding:11px}.meta small{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}.meta b{color:var(--navy)}.toast{position:fixed;right:22px;bottom:22px;background:#172b4d;color:white;padding:12px 16px;border-radius:10px;box-shadow:0 8px 24px #10182830;display:none;z-index:20}.empty{text-align:center;padding:35px;color:var(--muted)}.hidden{display:none!important}.footer-note{font-size:11px;color:var(--muted);margin-top:16px}.login{max-width:420px;margin:9vh auto;padding:30px}.login h1{font-size:24px;color:var(--navy);margin:0 0 6px}.login .field{margin:18px 0}.login input{background:#fff}.login .btn{width:100%;padding:12px}
+@media(max-width:760px){.wrap{margin:18px auto;padding:0 13px}.topbar{padding:0 14px}.page-head{display:block}.page-head .btn{margin-top:14px}.stats{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.score-grid{grid-template-columns:1fr 1fr}.detail-meta{grid-template-columns:1fr 1fr}.content-card{padding:15px}.score-card:last-child{grid-column:span 2}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="logo">Q</div><span>QUALITY SYSTEM <span style="font-weight:400;color:#98a2b3">/ Sensory</span></span></div>
+  <div class="top-right"><span id="userLabel">Demo Inspector</span><div class="avatar">DI</div><button class="linkbtn" onclick="logout()">Logout</button></div>
+</header>
+<main class="wrap">
+  <section id="loginView" class="panel login hidden">
+    <div class="logo" style="margin-bottom:20px">Q</div><h1>Sensory Evaluation</h1><p class="sub">Demo prototype · Dummy data only</p>
+    <div class="field"><label>Nama Inspector</label><input id="loginName" value="Demo Inspector"></div>
+    <button class="btn primary" onclick="login()">Masuk ke Demo</button>
+    <p class="footer-note">Tidak menggunakan autentikasi sungguhan. Login hanya simulasi untuk presentasi.</p>
+  </section>
+
+  <section id="headerView">
+    <div class="crumb">Sensory Management / <b>Header Transactions</b></div>
+    <div class="page-head"><div><h1>Header Sensory</h1><p class="sub">Pilih transaksi produksi untuk melakukan evaluasi sensory.</p></div><button class="btn" onclick="resetDemo()">↻ Reset dummy data</button></div>
+    <div class="stats">
+      <div class="panel stat"><span class="label">Header transactions</span><strong id="statHeaders">4</strong></div>
+      <div class="panel stat"><span class="label">Total evaluations</span><strong id="statEvaluations">6</strong></div>
+      <div class="panel stat"><span class="label">Belum dievaluasi</span><strong id="statPending">1</strong></div>
+    </div>
+    <div class="panel">
+      <div class="toolbar"><div><b>Daftar transaksi</b><div class="muted" style="font-size:12px">Sumber simulasi: SensoryH_2026</div></div><input class="search" id="headerSearch" placeholder="Cari ID, varian, SKU, line..." oninput="renderHeaders()"></div>
+      <div class="table-wrap"><table><thead><tr><th>Header ID</th><th>Tanggal Produksi</th><th>Varian</th><th>SKU</th><th>Line</th><th>Temper Choco</th><th>Sensory Date</th><th>Evaluasi</th><th>Aksi</th></tr></thead><tbody id="headerRows"></tbody></table></div>
+    </div>
+    <p class="footer-note">Catatan demo: data Header dianggap sudah tersedia dari proses daily master. Pilih salah satu baris untuk melihat hasil atau menambahkan evaluasi.</p>
+  </section>
+
+  <section id="formView" class="hidden">
+    <div class="crumb"><button class="linkbtn" onclick="showHeaders()">Header Sensory</button> / <b>New Evaluation</b></div>
+    <div class="page-head"><div><h1>Input Sensory Evaluation</h1><p class="sub">Isi lima parameter dengan skala integer 1–5.</p></div><span class="pill">NEW DETAIL</span></div>
+    <div class="panel content-card">
+      <h3 class="section-title">Informasi Header · Read only</h3>
+      <div class="detail-meta" id="formMeta"></div>
+    </div>
+    <div class="panel content-card">
+      <h3 class="section-title">Sensory Parameters</h3>
+      <p class="muted" style="font-size:12px;margin-top:-7px;margin-bottom:17px">Pilih satu nilai untuk setiap parameter. Seluruh parameter wajib diisi.</p>
+      <div class="score-grid" id="scoreInputs"></div>
+      <div class="form-footer"><button class="btn" onclick="showDetails(activeHeader)">Batal</button><button class="btn primary" onclick="submitEvaluation()">Submit Evaluation →</button></div>
+    </div>
+    <p class="footer-note">Setiap Submit membuat satu record baru di database Detail. Data yang sudah disubmit tidak diedit pada MVP ini.</p>
+  </section>
+
+  <section id="detailView" class="hidden">
+    <div class="crumb"><button class="linkbtn" onclick="showHeaders()">Header Sensory</button> / <b>Evaluation Results</b></div>
+    <div class="page-head"><div><h1>Detail Sensory Results</h1><p class="sub">Riwayat evaluasi untuk satu transaksi Header.</p></div><button class="btn primary" onclick="showForm(activeHeader)">＋ Add Evaluation</button></div>
+    <div class="panel content-card"><h3 class="section-title">Header Information</h3><div class="detail-meta" id="detailMeta"></div></div>
+    <div class="panel">
+      <div class="toolbar"><div><b>Evaluation history</b><div class="muted" style="font-size:12px">Sumber simulasi: Sensory_SP_CodeQ_2026</div></div><span class="pill green" id="detailCount">0 evaluations</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Detail Code</th><th>Inspector</th><th>Blooming</th><th>Odor</th><th>Texture</th><th>Taste</th><th>Package Integrity</th><th>Submit Time</th></tr></thead><tbody id="detailRows"></tbody></table></div>
+    </div>
+    <div class="form-footer"><button class="btn" onclick="showHeaders()">← Back to Header Table</button><span class="muted" style="font-size:12px">Header ID: <b id="detailHeaderId"></b></span></div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+</div>
+<script>
+const parameters=["Blooming","Odor","Texture","Taste","Package Integrity"];
+const seedHeaders=[
+ {id:1,date:"2026-11-06",variant:"Dark Chocolate",sku:"DC-450",line:"Line 1",temp:29.5,sensory:"2026-11-06"},
+ {id:2,date:"2026-11-06",variant:"Milk Chocolate",sku:"MC-220",line:"Line 2",temp:30.0,sensory:"2026-11-06"},
+ {id:3,date:"2026-11-05",variant:"White Chocolate",sku:"WC-110",line:"Line 3",temp:28.5,sensory:"2026-11-06"},
+ {id:4,date:"2026-11-05",variant:"Hazelnut",sku:"HN-330",line:"Line 1",temp:29.0,sensory:"2026-11-06"}
+];
+const seedDetails=[
+ {id:1,code:"1a",headerId:1,scores:[5,5,5,5,5],inspector:"Ayu",time:"06 Nov 2026, 09:12"},
+ {id:2,code:"1b",headerId:1,scores:[5,5,5,5,4],inspector:"Budi",time:"06 Nov 2026, 09:25"},
+ {id:3,code:"1c",headerId:1,scores:[5,5,5,2,5],inspector:"Ayu",time:"06 Nov 2026, 09:41"},
+ {id:4,code:"2a",headerId:2,scores:[4,5,5,5,5],inspector:"Citra",time:"06 Nov 2026, 10:05"},
+ {id:5,code:"2b",headerId:2,scores:[5,4,5,5,5],inspector:"Ayu",time:"06 Nov 2026, 10:18"},
+ {id:6,code:"3a",headerId:3,scores:[5,5,4,5,5],inspector:"Budi",time:"06 Nov 2026, 11:02"}
+];
+let headers=[],details=[],activeHeader=null,scores={},inspector="Demo Inspector",nextId=7;
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function init(){headers=clone(seedHeaders);details=clone(seedDetails);nextId=7;activeHeader=null;document.getElementById("userLabel").textContent=inspector;renderHeaders();show("headerView")}
+function show(id){["loginView","headerView","formView","detailView"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id))}
+function toast(msg){let t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",2600)}
+function login(){inspector=document.getElementById("loginName").value.trim()||"Demo Inspector";document.getElementById("userLabel").textContent=inspector;showHeaders()}
+function logout(){show("loginView")}
+function fmt(d){return new Date(d+"T00:00:00").toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"})}
+function forHeader(id){return details.filter(d=>d.headerId===id)}
+function renderHeaders(){
+ const q=(document.getElementById("headerSearch")?.value||"").toLowerCase();
+ const rows=headers.filter(h=>[h.id,h.variant,h.sku,h.line].join(" ").toLowerCase().includes(q));
+ document.getElementById("headerRows").innerHTML=rows.map(h=>{let n=forHeader(h.id).length;return `<tr><td class="code">#${h.id}</td><td>${fmt(h.date)}</td><td><b>${h.variant}</b></td><td>${h.sku}</td><td>${h.line}</td><td>${h.temp.toFixed(1)} °C</td><td>${fmt(h.sensory)}</td><td><span class="pill ${n?'green':'gray'}">${n} evaluation${n===1?'':'s'}</span></td><td><button class="linkbtn" onclick="showDetails(${h.id})">Open →</button></td></tr>`}).join("")||`<tr><td colspan="9" class="empty">Tidak ada transaksi yang cocok.</td></tr>`;
+ document.getElementById("statHeaders").textContent=headers.length;
+ document.getElementById("statEvaluations").textContent=details.length;
+ document.getElementById("statPending").textContent=headers.filter(h=>!forHeader(h.id).length).length;
+}
+function metaHTML(h){return [["Header ID","#"+h.id],["Tanggal Produksi",fmt(h.date)],["Varian",h.variant],["SKU / Line",h.sku+" / "+h.line],["Temper Choco",h.temp+" °C"],["Sensory Date",fmt(h.sensory)]]}
+function renderMeta(id){let h=headers.find(x=>x.id===id);return metaHTML(h).map(([k,v])=>`<div class="meta"><small>${k}</small><b>${v}</b></div>`).join("")}
+function showHeaders(){activeHeader=null;renderHeaders();show("headerView")}
+function showDetails(id){activeHeader=id;let h=headers.find(x=>x.id===id);document.getElementById("detailMeta").innerHTML=renderMeta(id);document.getElementById("detailHeaderId").textContent=id;let ds=forHeader(id);document.getElementById("detailCount").textContent=ds.length+" evaluations";document.getElementById("detailRows").innerHTML=ds.map(d=>`<tr><td class="code">${d.code}</td><td>${d.inspector}</td>${d.scores.map(v=>`<td><b>${v}</b></td>`).join("")}<td>${d.time}</td></tr>`).join("")||`<tr><td colspan="8" class="empty">Belum ada hasil evaluasi. Klik Add Evaluation untuk memulai.</td></tr>`;show("detailView")}
+function showForm(id){activeHeader=id;scores={};let h=headers.find(x=>x.id===id);document.getElementById("formMeta").innerHTML=renderMeta(id);document.getElementById("scoreInputs").innerHTML=parameters.map((p,i)=>`<div class="score-card"><label>${p}</label><div class="score-buttons">${[1,2,3,4,5].map(n=>`<button type="button" id="score-${i}-${n}" onclick="pickScore(${i},${n})">${n}</button>`).join("")}</div><div class="score-hint">Pilih skor 1–5</div></div>`).join("");show("formView")}
+function pickScore(i,n){scores[i]=n;[1,2,3,4,5].forEach(v=>document.getElementById(`score-${i}-${v}`).classList.toggle("selected",v===n))}
+function submitEvaluation(){if(parameters.some((_,i)=>!scores[i])){toast("Lengkapi seluruh 5 parameter terlebih dahulu.");return}let existing=forHeader(activeHeader);let suffix=String.fromCharCode(97+existing.length);if(existing.length>=26){toast("Demo dibatasi 26 evaluasi per Header.");return}let d={id:nextId++,code:activeHeader+suffix,headerId:activeHeader,scores:parameters.map((_,i)=>scores[i]),inspector,time:new Date().toLocaleString("id-ID",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})};details.push(d);toast("Evaluation "+d.code+" berhasil disimpan (simulasi).");showDetails(activeHeader);renderHeaders()}
+function resetDemo(){if(confirm("Reset seluruh perubahan demo dan kembalikan data dummy awal?")){init();toast("Dummy data berhasil di-reset.")}}
+init();
+</script>
+</body>
+</html>
